@@ -1,0 +1,27 @@
+.main-app {
+  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.app-header {
+  background-color: #f5f5f5;
+}
+.app-body,
+.app-content {
+  flex: 1;
+}
+.app,
+.app-body {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 768px) {
+  .app-body {
+    flex-direction: column;
+    flex: 1;
+  }
+  .app-content {
+    flex: 1;
+  }
+}
