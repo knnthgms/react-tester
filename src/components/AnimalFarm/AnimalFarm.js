@@ -1,9 +1,11 @@
 import React from "react";
 import data from "../../Api/data";
-// import Api from "../../Api";
 import DropMenu from "../DropMenu";
 import AnimalCard from "../AnimalCard";
 import Autocomplete from "../AutoComplete";
+import AnimalAvgCard from "../AnimalAvgCard";
+import Utils from "../../utils/Utils";
+// import Api from "../../Api";
 import "./AnimalFarm.scss";
 
 class AnimalFarm extends React.Component {
@@ -49,12 +51,45 @@ class AnimalFarm extends React.Component {
     this.setState({ animalList, animalsSorted });
   };
 
+  getAvg = () => {
+    const { animalList } = this.state;
+    const distinctSet = [...new Set(animalList.animals.map(e => e.type))];
+    let averagesArray = [];
+    for (let animalType of distinctSet) {
+      let animalsOfType = animalList.animals.filter(a => a.type === animalType);
+      averagesArray.push({
+        type: animalType,
+        min: animalsOfType.reduce(
+          (min, b) => Math.min(min, b.age),
+          animalsOfType[0].age
+        ),
+        max: animalsOfType.reduce(
+          (max, b) => Math.max(max, b.age),
+          animalsOfType[0].age
+        ),
+        recursiveAvg: Utils.findMean(
+          animalsOfType.map(a => a.age),
+          animalsOfType.length
+        ).toFixed(3),
+        iterativeAvg: Utils.arrayAverage(animalsOfType.map(a => a.age)).toFixed(
+          3
+        ),
+        reducedAvg: (
+          animalsOfType.reduce((total, next) => total + next.age, 0) /
+          animalsOfType.length
+        ).toFixed(3)
+      });
+    }
+    this.setState({ averagesArray });
+  };
+
   render() {
     const {
       fetchingData,
       animalList,
       searchedAnimals,
-      animalsSorted
+      animalsSorted,
+      averagesArray
     } = this.state;
     const allTypesList = animalList && [
       ...new Set(animalList.animals.map(e => e.type))
@@ -83,6 +118,24 @@ class AnimalFarm extends React.Component {
                   {a}
                 </button>
               ))}
+            </div>
+            <span> Avg by type </span>
+            <button onClick={() => this.getAvg()}>get Averages</button>
+            <div className="animal-cards">
+              {averagesArray &&
+                averagesArray.map((ele, index) => {
+                  return (
+                    <AnimalAvgCard
+                      key={index}
+                      type={ele.type}
+                      min={ele.min}
+                      max={ele.max}
+                      recursiveAvg={ele.recursiveAvg}
+                      iterativeAvg={ele.iterativeAvg}
+                      reducedAvg={ele.reducedAvg}
+                    />
+                  );
+                })}
             </div>
             <div className="animal-cards">
               {searchedAnimals && searchedAnimals.length !== 0 && (
