@@ -33,11 +33,33 @@ class AnimalFarm extends React.Component {
     this.setState({ searchedAnimals: null });
   };
 
+  sortBy = type => {
+    const { animalList } = this.state;
+    let animalsSorted;
+    if (type === 1) {
+      animalList.animals.sort((a, b) => a.age - b.age);
+      animalsSorted = true;
+    } else if (type === 2) {
+      animalList.animals.sort((a, b) => b.age - a.age);
+      animalsSorted = true;
+    } else {
+      animalList.animals.sort((a, b) => a.id - b.id);
+      animalsSorted = false;
+    }
+    this.setState({ animalList, animalsSorted });
+  };
+
   render() {
-    const { fetchingData, animalList, searchedAnimals } = this.state;
+    const {
+      fetchingData,
+      animalList,
+      searchedAnimals,
+      animalsSorted
+    } = this.state;
     const allTypesList = animalList && [
       ...new Set(animalList.animals.map(e => e.type))
     ];
+
     return (
       <React.Fragment>
         {fetchingData ? (
@@ -81,6 +103,16 @@ class AnimalFarm extends React.Component {
                     </React.Fragment>
                   );
                 })}
+            </div>
+            <div>
+              <span>Sort by age:</span>
+              <button onClick={() => this.sortBy(1)}>Ascending</button>
+              <button onClick={() => this.sortBy(2)}>Descending</button>
+              {animalsSorted ? (
+                <button onClick={() => this.sortBy(0)}>Cancel</button>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="animal-cards">
               {animalList.animals.map((ele, index) => {
