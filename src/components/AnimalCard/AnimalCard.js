@@ -3,7 +3,7 @@ import "./AnimalCard.scss";
 
 const AnimalCard = props => {
   return (
-    <div className="animal-card">
+    <div className={"animal-card " + props.type + "-card"}>
       <div className="card-row">
         <span className="key">name</span>
         <span className="value">{props.name}</span>

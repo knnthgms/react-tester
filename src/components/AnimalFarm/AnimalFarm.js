@@ -3,6 +3,7 @@ import data from "../../Api/data";
 // import Api from "../../Api";
 import DropMenu from "../DropMenu";
 import AnimalCard from "../AnimalCard";
+import Autocomplete from "../AutoComplete";
 import "./AnimalFarm.scss";
 
 class AnimalFarm extends React.Component {
@@ -44,6 +45,11 @@ class AnimalFarm extends React.Component {
         ) : (
           <React.Fragment>
             <DropMenu onSelect={this.getUserChoice} />
+            <span>Search for animal type</span>
+            <Autocomplete
+              suggestions={allTypesList}
+              setValue={this.selectType}
+            />
             <span>Types are</span>
             <div className="types-list">
               {allTypesList.map((a, i) => (
@@ -57,10 +63,11 @@ class AnimalFarm extends React.Component {
               ))}
             </div>
             <div className="animal-cards">
-              {searchedAnimals && (
+              {searchedAnimals && searchedAnimals.length !== 0 && (
                 <button onClick={this.clearSearch}>Clear Search</button>
               )}
               {searchedAnimals &&
+                searchedAnimals.length !== 0 &&
                 searchedAnimals.map((ele, index) => {
                   return (
                     <React.Fragment>
