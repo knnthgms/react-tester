@@ -137,10 +137,10 @@ class AnimalFarm extends React.Component {
                   );
                 })}
             </div>
+            {searchedAnimals && searchedAnimals.length !== 0 && (
+              <button onClick={this.clearSearch}>Clear Search</button>
+            )}
             <div className="animal-cards">
-              {searchedAnimals && searchedAnimals.length !== 0 && (
-                <button onClick={this.clearSearch}>Clear Search</button>
-              )}
               {searchedAnimals &&
                 searchedAnimals.length !== 0 &&
                 searchedAnimals.map((ele, index) => {
@@ -179,6 +179,26 @@ class AnimalFarm extends React.Component {
                   />
                 );
               })}
+            </div>
+
+            {animalList.animals
+              .filter(a => a.type === "dog")
+              .map(e => e.age)
+              .reduce((a, b) => a + b, 0) * 7}
+            <div className="animal-cards">
+              {animalList.animals
+                .filter(e => e.type === "dog")
+                .map((ele, index) => {
+                  return (
+                    <AnimalCard
+                      key={index}
+                      name={ele.name}
+                      type={ele.type}
+                      age={ele.age * 14}
+                      sex={ele.sex}
+                    />
+                  );
+                })}
             </div>
           </React.Fragment>
         )}
