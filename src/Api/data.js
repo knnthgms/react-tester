@@ -1,4 +1,4 @@
-export const data = {
+const data = {
   status: "ok",
   result: {
     animals: [
@@ -24,3 +24,4 @@ export const data = {
     ]
   }
 };
+export default data;

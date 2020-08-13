@@ -1,22 +1,13 @@
 import React from "react";
-import DropMenu from "./components/DropMenu";
-import AnimalCard from "./components/AnimalCard";
+import AnimalFarm from "./components/AnimalFarm";
 import "./App.scss";
 
 function App() {
   return (
     <div className="main-app">
-      <header className="app-header">Leaf growCoding assessment</header>
+      <header className="app-header">Leaf Grow Coding assessment</header>
       <main className="app-body">
-        <DropMenu />
-        <div style={{ display: "flex", flexFlow: "wrap" }}>
-          <AnimalCard />
-          <AnimalCard />
-          <AnimalCard />
-          <AnimalCard />
-          <AnimalCard />
-          <AnimalCard />
-        </div>
+        <AnimalFarm />
       </main>
       <footer>{new Date().toDateString()}</footer>
     </div>

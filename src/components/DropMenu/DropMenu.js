@@ -11,10 +11,17 @@ const options = [
   { key: 4, value: 'Display the sum all of the dogs ages in "human years"' }
 ];
 
-const DropMenu = () => {
+const handleChange = (selection, props) => {
+  props.onSelect(selection.target.value);
+};
+
+const DropMenu = props => {
   return (
     <div>
-      <select className="option-selection">
+      <select
+        className="option-selection"
+        onChange={e => handleChange(e, props)}
+      >
         {options.map(option => (
           <option key={option.key} value={option.key}>
             {option.value}
