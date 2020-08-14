@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="main-app">
       <header className="app-header">
-        <span className="header-text">Leaf Grow Coding assessment</span>
+        <span className="header-text">Leaf Grow coding assessment</span>
       </header>
       <main className="app-body">
         <AnimalFarm />

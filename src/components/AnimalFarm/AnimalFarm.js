@@ -11,7 +11,7 @@ import "./AnimalFarm.scss";
 class AnimalFarm extends React.Component {
   state = {
     fetchingData: true,
-    userChoice: "3"
+    userChoice: "1"
   };
 
   componentDidMount() {
@@ -185,9 +185,9 @@ class AnimalFarm extends React.Component {
     return (
       <>
         <div className="cards-title">
-          <h4> Average by type </h4>
+          <h4> Average age by animal type </h4>
         </div>
-        <div className="animal-cards">
+        <div className="animal-avg-cards">
           {averagesArray &&
             averagesArray.map((ele, index) => {
               return (
@@ -208,12 +208,21 @@ class AnimalFarm extends React.Component {
   };
   choice4 = () => {
     const { animalList } = this.state;
+    const totalAge = animalList.animals
+      .filter(a => a.type === "dog")
+      .map(e => e.age)
+      .reduce((a, b) => a + b, 0);
+    const dogAgeTotal = parseFloat(totalAge * 7).toFixed(1);
     return (
       <>
-        {animalList.animals
-          .filter(a => a.type === "dog")
-          .map(e => e.age)
-          .reduce((a, b) => a + b, 0) * 7}
+        <div className="cards-title">
+          <h4> Sum of all dogs ages in dog years </h4>
+        </div>
+        <span>
+          Sum of all dogs age is <strong>{totalAge} years</strong> or{" "}
+          <strong>{dogAgeTotal} years </strong> in dog years
+        </span>
+        <h4>All dogs</h4>
         <div className="animal-cards">
           {animalList.animals
             .filter(e => e.type === "dog")
@@ -223,7 +232,7 @@ class AnimalFarm extends React.Component {
                   key={index}
                   name={ele.name}
                   type={ele.type}
-                  age={ele.age * 14}
+                  age={ele.age}
                   sex={ele.sex}
                 />
               );

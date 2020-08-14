@@ -1,0 +1,28 @@
+.animal-avg-card {
+  width: 80%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 0 10px 0;
+  .card-title {
+    font-size: 1.5em;
+    font-weight: 500;
+  }
+  .card-row {
+    display: flex;
+    justify-content: center;
+  }
+  .bottom-row {
+    display: flex;
+    .bottom-line {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+.key {
+  font-weight: bold;
+  margin-right: 10px;
+}

@@ -4,6 +4,12 @@
   padding: 10px;
   justify-content: center;
 }
+.animal-avg-cards {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+}
 .button-container {
   button {
     margin: 5px 10px 0 0;
