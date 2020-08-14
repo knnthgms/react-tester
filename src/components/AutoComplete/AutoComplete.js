@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import "./AutoComplete.scss";
 import PropTypes from "prop-types";
 
 class Autocomplete extends Component {
@@ -56,6 +57,7 @@ class Autocomplete extends Component {
       showSuggestions: false,
       userInput: e.currentTarget.innerText
     });
+    this.props.setValue(e.currentTarget.innerText);
   };
 
   // Event fired when the user presses a key down
@@ -70,13 +72,13 @@ class Autocomplete extends Component {
         showSuggestions: false,
         userInput: filteredSuggestions[activeSuggestion]
       });
+      this.props.setValue(filteredSuggestions[activeSuggestion]);
     }
     // User pressed the up arrow, decrement the index
     else if (e.keyCode === 38) {
       if (activeSuggestion === 0) {
         return;
       }
-
       this.setState({ activeSuggestion: activeSuggestion - 1 });
     }
     // User pressed the down arrow, increment the index
@@ -84,7 +86,6 @@ class Autocomplete extends Component {
       if (activeSuggestion - 1 === filteredSuggestions.length) {
         return;
       }
-
       this.setState({ activeSuggestion: activeSuggestion + 1 });
     }
   };
@@ -127,7 +128,7 @@ class Autocomplete extends Component {
       } else {
         suggestionsListComponent = (
           <div className="no-suggestions">
-            <em>No suggestions, you're on your own!</em>
+            <em>No suggestions</em>
           </div>
         );
       }

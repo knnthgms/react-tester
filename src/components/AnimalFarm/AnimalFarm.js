@@ -10,17 +10,20 @@ import "./AnimalFarm.scss";
 
 class AnimalFarm extends React.Component {
   state = {
-    fetchingData: true
+    fetchingData: true,
+    userChoice: "3"
   };
+
   componentDidMount() {
     // Api.getAnimalData(response => {
     //   this.setState({ animalList: response.result, fetchingData:false });
     // });
     this.setState({ animalList: data.result, fetchingData: false });
-    console.log(data.result);
   }
+
   getUserChoice = userChoice => {
     this.setState({ userChoice });
+    if (userChoice == "3") this.getAvg();
   };
 
   selectType = animalType => {
@@ -83,32 +86,24 @@ class AnimalFarm extends React.Component {
     this.setState({ averagesArray });
   };
 
-  render() {
-    const {
-      fetchingData,
-      animalList,
-      searchedAnimals,
-      animalsSorted,
-      averagesArray
-    } = this.state;
+  choice1 = () => {
+    const { animalList, searchedAnimals } = this.state;
     const allTypesList = animalList && [
       ...new Set(animalList.animals.map(e => e.type))
     ];
-
     return (
-      <React.Fragment>
-        {fetchingData ? (
-          <span>fetchingData</span>
-        ) : (
-          <React.Fragment>
-            <DropMenu onSelect={this.getUserChoice} />
-            <span>Search for animal type</span>
+      <>
+        <div className="search-tools">
+          <strong>Search for animal type</strong>
+          <div className="search-box">
             <Autocomplete
               suggestions={allTypesList}
               setValue={this.selectType}
             />
-            <span>Types are</span>
-            <div className="types-list">
+          </div>
+          <div className="search-filters">
+            <strong>Types are</strong>
+            <div className="button-container">
               {allTypesList.map((a, i) => (
                 <button
                   key={i}
@@ -119,56 +114,21 @@ class AnimalFarm extends React.Component {
                 </button>
               ))}
             </div>
-            <span> Avg by type </span>
-            <button onClick={() => this.getAvg()}>get Averages</button>
-            <div className="animal-cards">
-              {averagesArray &&
-                averagesArray.map((ele, index) => {
-                  return (
-                    <AnimalAvgCard
-                      key={index}
-                      type={ele.type}
-                      min={ele.min}
-                      max={ele.max}
-                      recursiveAvg={ele.recursiveAvg}
-                      iterativeAvg={ele.iterativeAvg}
-                      reducedAvg={ele.reducedAvg}
-                    />
-                  );
-                })}
-            </div>
-            {searchedAnimals && searchedAnimals.length !== 0 && (
-              <button onClick={this.clearSearch}>Clear Search</button>
-            )}
-            <div className="animal-cards">
-              {searchedAnimals &&
-                searchedAnimals.length !== 0 &&
-                searchedAnimals.map((ele, index) => {
-                  return (
-                    <React.Fragment>
-                      <AnimalCard
-                        key={index}
-                        name={ele.name}
-                        type={ele.type}
-                        age={ele.age}
-                        sex={ele.sex}
-                      />
-                    </React.Fragment>
-                  );
-                })}
-            </div>
-            <div>
-              <span>Sort by age:</span>
-              <button onClick={() => this.sortBy(1)}>Ascending</button>
-              <button onClick={() => this.sortBy(2)}>Descending</button>
-              {animalsSorted ? (
-                <button onClick={() => this.sortBy(0)}>Cancel</button>
-              ) : (
-                <></>
-              )}
+          </div>
+        </div>
+
+        {searchedAnimals && (
+          <>
+            <div className="cards-title">
+              <h4>Search Results ({searchedAnimals.length})</h4>
+              {searchedAnimals && searchedAnimals.length !== 0 ? (
+                <div className="clear-search">
+                  <button onClick={this.clearSearch}>Clear Search</button>
+                </div>
+              ) : null}
             </div>
             <div className="animal-cards">
-              {animalList.animals.map((ele, index) => {
+              {searchedAnimals.map((ele, index) => {
                 return (
                   <AnimalCard
                     key={index}
@@ -180,29 +140,117 @@ class AnimalFarm extends React.Component {
                 );
               })}
             </div>
-
-            {animalList.animals
-              .filter(a => a.type === "dog")
-              .map(e => e.age)
-              .reduce((a, b) => a + b, 0) * 7}
-            <div className="animal-cards">
-              {animalList.animals
-                .filter(e => e.type === "dog")
-                .map((ele, index) => {
-                  return (
-                    <AnimalCard
-                      key={index}
-                      name={ele.name}
-                      type={ele.type}
-                      age={ele.age * 14}
-                      sex={ele.sex}
-                    />
-                  );
-                })}
-            </div>
-          </React.Fragment>
+          </>
         )}
-      </React.Fragment>
+      </>
+    );
+  };
+  choice2 = () => {
+    const { animalsSorted, animalList } = this.state;
+    return (
+      <>
+        <div className="cards-title">
+          <h4>All animals ({animalList.animals.length})</h4>
+          <div className="cards-sorting">
+            <span>Sort by age:</span>
+            <div className="button-container">
+              <button onClick={() => this.sortBy(1)}>Ascending</button>
+              <button onClick={() => this.sortBy(2)}>Descending</button>
+              {animalsSorted ? (
+                <button onClick={() => this.sortBy(0)}>Cancel</button>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="animal-cards">
+          {animalList.animals.map((ele, index) => {
+            return (
+              <AnimalCard
+                key={index}
+                name={ele.name}
+                type={ele.type}
+                age={ele.age}
+                sex={ele.sex}
+              />
+            );
+          })}
+        </div>
+      </>
+    );
+  };
+  choice3 = () => {
+    const { averagesArray } = this.state;
+    return (
+      <>
+        <div className="cards-title">
+          <h4> Average by type </h4>
+        </div>
+        <div className="animal-cards">
+          {averagesArray &&
+            averagesArray.map((ele, index) => {
+              return (
+                <AnimalAvgCard
+                  key={index}
+                  type={ele.type}
+                  min={ele.min}
+                  max={ele.max}
+                  recursiveAvg={ele.recursiveAvg}
+                  iterativeAvg={ele.iterativeAvg}
+                  reducedAvg={ele.reducedAvg}
+                />
+              );
+            })}
+        </div>
+      </>
+    );
+  };
+  choice4 = () => {
+    const { animalList } = this.state;
+    return (
+      <>
+        {animalList.animals
+          .filter(a => a.type === "dog")
+          .map(e => e.age)
+          .reduce((a, b) => a + b, 0) * 7}
+        <div className="animal-cards">
+          {animalList.animals
+            .filter(e => e.type === "dog")
+            .map((ele, index) => {
+              return (
+                <AnimalCard
+                  key={index}
+                  name={ele.name}
+                  type={ele.type}
+                  age={ele.age * 14}
+                  sex={ele.sex}
+                />
+              );
+            })}
+        </div>
+      </>
+    );
+  };
+  render() {
+    const { fetchingData, userChoice } = this.state;
+    return (
+      <div className="app-content">
+        {fetchingData ? (
+          <span>fetchingData</span>
+        ) : (
+          <>
+            <div className="user-choice-select">
+              <h3>Select a task</h3>
+              <DropMenu onSelect={this.getUserChoice} />
+            </div>
+            {userChoice === "1" && this.choice1()}
+            {userChoice === "2" && this.choice2()}
+            {userChoice === "3" && this.choice3()}
+            {userChoice === "4" && this.choice4()}
+          </>
+        )}
+      </div>
     );
   }
 }
