@@ -118,18 +118,36 @@ class AnimalFarm extends React.Component {
             </div>
           </div>
         </div>
-
-        {searchedAnimals && (
+        {!searchedAnimals || searchedAnimals.length === 0 ? (
+          <>
+            <div className="cards-title">
+              <h4>
+                All Animals ({animalList.animals && animalList.animals.length})
+              </h4>
+            </div>
+            <div className="animal-cards">
+              {animalList.animals.map((ele, index) => {
+                return (
+                  <AnimalCard
+                    key={index}
+                    name={ele.name}
+                    type={ele.type}
+                    age={ele.age}
+                    sex={ele.sex}
+                  />
+                );
+              })}
+            </div>
+          </>
+        ) : (
           <>
             <div className="cards-title">
               <h4>Search Results ({searchedAnimals.length})</h4>
-              {searchedAnimals && searchedAnimals.length !== 0 ? (
-                <div className="clear-search">
-                  <button className="btn tag" onClick={this.clearSearch}>
-                    Clear Search
-                  </button>
-                </div>
-              ) : null}
+              <div className="clear-search">
+                <button className="btn tag" onClick={this.clearSearch}>
+                  Clear Search
+                </button>
+              </div>
             </div>
             <div className="animal-cards">
               {searchedAnimals.map((ele, index) => {
@@ -255,13 +273,12 @@ class AnimalFarm extends React.Component {
     const { dataError, userChoice } = this.state;
     return (
       <div className="app-content">
-        {dataError ? (
-          <span className="timestamps">using offline data</span>
-        ) : (
-          <span className="timestamps">
-            data fetched at {new Date().toGMTString()}{" "}
-          </span>
-        )}
+        <span className="timestamps">
+          {dataError
+            ? `using offline data`
+            : "data fetched at" + new Date().toGMTString()}
+        </span>
+
         <div className="user-choice-select">
           <h3>Select a task</h3>
           <DropMenu onSelect={this.getUserChoice} />
