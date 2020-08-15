@@ -4,7 +4,7 @@ import endPoints from "./Endpoints";
 async function getAnimalData() {
   try {
     const responseData = await axios.get(endPoints.vercelAnimals);
-    const data = await responseData.json();
+    const data = await responseData.data;
     return data;
   } catch (error) {
     console.log(error);

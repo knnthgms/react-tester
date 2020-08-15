@@ -23,7 +23,7 @@ class AnimalFarm extends React.Component {
 
   getUserChoice = (userChoice) => {
     this.setState({ userChoice });
-    if (userChoice == "3") this.getAvg();
+    if (userChoice === "3") this.getAvg();
   };
 
   selectType = (animalType) => {
@@ -106,15 +106,16 @@ class AnimalFarm extends React.Component {
           <div className="search-filters">
             <strong>Types are</strong>
             <div className="button-container">
-              {allTypesList.map((a, i) => (
-                <button
-                  key={i}
-                  className="btn tag"
-                  onClick={() => this.selectType(a)}
-                >
-                  {a}
-                </button>
-              ))}
+              {allTypesList &&
+                allTypesList.map((a, i) => (
+                  <button
+                    key={i}
+                    className="btn tag"
+                    onClick={() => this.selectType(a)}
+                  >
+                    {a}
+                  </button>
+                ))}
             </div>
           </div>
         </div>
