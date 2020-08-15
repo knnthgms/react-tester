@@ -1,12 +1,50 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { render } from "react-dom";
+import React from "react";
+import AnimalFarm from "./components/AnimalFarm";
+import Api from "./Api";
+import APICONSTANTS from "./Api/Constants.js";
+import "./App.scss";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class App extends React.Component {
+  state = {
+    fetchingData: true,
+    fetchingError: false,
+    data: null,
+  };
+  componentDidMount() {
+    this.loadData();
+  }
+  loadData = async () => {
+    this.setState({ fetchingData: true });
+    const response = await Api.getAnimalData();
+    const data = response.result;
+    const status = response.status;
+    this.setState({
+      data,
+      fetchingData: false,
+      fetchingError: !data || status !== "ok",
+    });
+  };
+  render() {
+    const { data, fetchingData, fetchingError } = this.state;
+    return (
+      <div className="main-app">
+        <header className="app-header">
+          <span className="header-text">Leaf Grow coding assessment</span>
+        </header>
+        <main className="app-body">
+          {(data || !fetchingData || fetchingError) && (
+            <AnimalFarm
+              data={data}
+              fetchingData={fetchingData}
+              fetchingError={fetchingError}
+            />
+          )}
+        </main>
+        <footer className="app-footer">{new Date().toDateString()}</footer>
+      </div>
+    );
+  }
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+render(<App />, document.getElementById("root"));

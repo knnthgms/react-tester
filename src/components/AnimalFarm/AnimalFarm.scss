@@ -17,6 +17,12 @@
   @include screen("tablet") {
     margin: 0 5em;
   }
+  .timestamps {
+    font-size: 10px;
+    opacity: 0.4;
+    position: absolute;
+    right: 10%;
+  }
   padding: 2em;
   .animal-cards {
     display: flex;

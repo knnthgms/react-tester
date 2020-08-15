@@ -1,24 +1,23 @@
 import React from "react";
-import data from "../../Api/data";
+import offlineData from "../../Api/data";
 import DropMenu from "../DropMenu";
 import AnimalCard from "../AnimalCard";
 import Autocomplete from "../AutoComplete";
 import AnimalAvgCard from "../AnimalAvgCard";
 import Utils from "../../utils/Utils";
-// import Api from "../../Api";
 import "./AnimalFarm.scss";
 
 class AnimalFarm extends React.Component {
   state = {
-    fetchingData: true,
+    loading: this.props.fetchingData,
+    dataError: !this.props.data || this.props.fetchingError,
+    animalList: this.props.data,
     userChoice: "1",
   };
 
   componentDidMount() {
-    // Api.getAnimalData(response => {
-    //   this.setState({ animalList: response.result, fetchingData:false });
-    // });
-    this.setState({ animalList: data.result, fetchingData: false });
+    const { dataError } = this.state;
+    if (dataError) this.setState({ animalList: offlineData.result });
   }
 
   getUserChoice = (userChoice) => {
@@ -253,23 +252,24 @@ class AnimalFarm extends React.Component {
     );
   };
   render() {
-    const { fetchingData, userChoice } = this.state;
+    const { dataError, userChoice } = this.state;
     return (
       <div className="app-content">
-        {fetchingData ? (
-          <span>fetchingData</span>
+        {dataError ? (
+          <span className="timestamps">using offline data</span>
         ) : (
-          <>
-            <div className="user-choice-select">
-              <h3>Select a task</h3>
-              <DropMenu onSelect={this.getUserChoice} />
-            </div>
-            {userChoice === "1" && this.choice1()}
-            {userChoice === "2" && this.choice2()}
-            {userChoice === "3" && this.choice3()}
-            {userChoice === "4" && this.choice4()}
-          </>
+          <span className="timestamps">
+            data fetched at {new Date().toGMTString()}{" "}
+          </span>
         )}
+        <div className="user-choice-select">
+          <h3>Select a task</h3>
+          <DropMenu onSelect={this.getUserChoice} />
+        </div>
+        {userChoice === "1" && this.choice1()}
+        {userChoice === "2" && this.choice2()}
+        {userChoice === "3" && this.choice3()}
+        {userChoice === "4" && this.choice4()}
       </div>
     );
   }

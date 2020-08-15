@@ -1,5 +1,6 @@
 @import "../../styles/colors.scss";
 @import "../../styles/mixins.scss";
+$border: 4px solid;
 .animal-card {
   width: 230px;
   display: flex;
@@ -7,6 +8,7 @@
   padding: 10px;
   margin: 0 10px 10px 0;
   border-radius: 5px;
+  border: $border;
   .card-row {
     display: inherit;
     .key {
@@ -23,17 +25,21 @@
 
 .dog-card {
   $base-colour: $red-light;
-  @include gradient(lighten($base-colour, 10%), $base-colour, vertical);
+  @include gradient($white, lighten($base-colour, 25%), vertical);
+  border: $border $base-colour;
 }
 .cat-card {
   $base-colour: $blue-light;
-  @include gradient(lighten($base-colour, 10%), $base-colour, vertical);
+  @include gradient($white, lighten($base-colour, 25%), vertical);
+  border: $border $base-colour;
 }
 .cow-card {
   $base-colour: $yellow;
-  @include gradient(lighten($base-colour, 10%), $base-colour, vertical);
+  @include gradient($white, lighten($base-colour, 25%), vertical);
+  border: $border $base-colour;
 }
 .horse-card {
   $base-colour: $green;
-  @include gradient(lighten($base-colour, 10%), $base-colour, vertical);
+  @include gradient($white, lighten($base-colour, 25%), vertical);
+  border: $border $base-colour;
 }

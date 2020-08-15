@@ -3,11 +3,11 @@ import endPoints from "./Endpoints";
 
 async function getAnimalData() {
   try {
-    const responseData = await axios.get(endPoints.vercelAnimals);
-    const data = await responseData.data;
+    const response = await axios.get(endPoints.vercelAnimals);
+    const data = response.data;
     return data;
   } catch (error) {
-    console.log(error);
+    console.error("error: ", error);
   }
 }
 
