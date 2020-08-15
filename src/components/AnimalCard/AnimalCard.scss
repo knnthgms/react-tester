@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+@import "../../styles/mixins.scss";
 .animal-card {
   width: 230px;
   display: flex;
@@ -18,15 +20,20 @@
     }
   }
 }
+
 .dog-card {
-  background-color: orange;
+  $base-colour: $red-light;
+  @include gradient(lighten($base-colour, 10%), $base-colour, vertical);
 }
 .cat-card {
-  background-color: skyblue;
+  $base-colour: $blue-light;
+  @include gradient(lighten($base-colour, 10%), $base-colour, vertical);
 }
 .cow-card {
-  background-color: lightsalmon;
+  $base-colour: $yellow;
+  @include gradient(lighten($base-colour, 10%), $base-colour, vertical);
 }
 .horse-card {
-  background-color: honeydew;
+  $base-colour: $green;
+  @include gradient(lighten($base-colour, 10%), $base-colour, vertical);
 }

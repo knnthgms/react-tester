@@ -1,0 +1,23 @@
+@import "./colors.scss";
+@import "./mixins.scss";
+
+.btn {
+  padding: 20px 10px;
+}
+
+.tag {
+  @extend .btn;
+  @include transition(0.15s ease);
+  padding: 10px 15px;
+  background-color: $white;
+  border: 1px dashed $grey;
+  border-radius: 3px;
+  outline: none;
+  &:hover {
+    border-color: $grey-dark;
+  }
+  &:focus {
+    background-color: $grey-dark;
+    color: $white;
+  }
+}

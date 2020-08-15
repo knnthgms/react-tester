@@ -11,7 +11,7 @@ import "./AnimalFarm.scss";
 class AnimalFarm extends React.Component {
   state = {
     fetchingData: true,
-    userChoice: "1"
+    userChoice: "1",
   };
 
   componentDidMount() {
@@ -21,15 +21,15 @@ class AnimalFarm extends React.Component {
     this.setState({ animalList: data.result, fetchingData: false });
   }
 
-  getUserChoice = userChoice => {
+  getUserChoice = (userChoice) => {
     this.setState({ userChoice });
     if (userChoice == "3") this.getAvg();
   };
 
-  selectType = animalType => {
+  selectType = (animalType) => {
     const { animalList } = this.state;
     const searchedAnimals = animalList.animals.filter(
-      a => a.type === animalType
+      (a) => a.type === animalType
     );
     this.setState({ searchedAnimals });
   };
@@ -38,7 +38,7 @@ class AnimalFarm extends React.Component {
     this.setState({ searchedAnimals: null });
   };
 
-  sortBy = type => {
+  sortBy = (type) => {
     const { animalList } = this.state;
     let animalsSorted;
     if (type === 1) {
@@ -56,10 +56,12 @@ class AnimalFarm extends React.Component {
 
   getAvg = () => {
     const { animalList } = this.state;
-    const distinctSet = [...new Set(animalList.animals.map(e => e.type))];
+    const distinctSet = [...new Set(animalList.animals.map((e) => e.type))];
     let averagesArray = [];
     for (let animalType of distinctSet) {
-      let animalsOfType = animalList.animals.filter(a => a.type === animalType);
+      let animalsOfType = animalList.animals.filter(
+        (a) => a.type === animalType
+      );
       averagesArray.push({
         type: animalType,
         min: animalsOfType.reduce(
@@ -71,16 +73,16 @@ class AnimalFarm extends React.Component {
           animalsOfType[0].age
         ),
         recursiveAvg: Utils.findMean(
-          animalsOfType.map(a => a.age),
+          animalsOfType.map((a) => a.age),
           animalsOfType.length
         ).toFixed(3),
-        iterativeAvg: Utils.arrayAverage(animalsOfType.map(a => a.age)).toFixed(
-          3
-        ),
+        iterativeAvg: Utils.arrayAverage(
+          animalsOfType.map((a) => a.age)
+        ).toFixed(3),
         reducedAvg: (
           animalsOfType.reduce((total, next) => total + next.age, 0) /
           animalsOfType.length
-        ).toFixed(3)
+        ).toFixed(3),
       });
     }
     this.setState({ averagesArray });
@@ -89,7 +91,7 @@ class AnimalFarm extends React.Component {
   choice1 = () => {
     const { animalList, searchedAnimals } = this.state;
     const allTypesList = animalList && [
-      ...new Set(animalList.animals.map(e => e.type))
+      ...new Set(animalList.animals.map((e) => e.type)),
     ];
     return (
       <>
@@ -107,7 +109,7 @@ class AnimalFarm extends React.Component {
               {allTypesList.map((a, i) => (
                 <button
                   key={i}
-                  className="tag"
+                  className="btn tag"
                   onClick={() => this.selectType(a)}
                 >
                   {a}
@@ -123,7 +125,9 @@ class AnimalFarm extends React.Component {
               <h4>Search Results ({searchedAnimals.length})</h4>
               {searchedAnimals && searchedAnimals.length !== 0 ? (
                 <div className="clear-search">
-                  <button onClick={this.clearSearch}>Clear Search</button>
+                  <button className="btn tag" onClick={this.clearSearch}>
+                    Clear Search
+                  </button>
                 </div>
               ) : null}
             </div>
@@ -154,10 +158,16 @@ class AnimalFarm extends React.Component {
           <div className="cards-sorting">
             <span>Sort by age:</span>
             <div className="button-container">
-              <button onClick={() => this.sortBy(1)}>Ascending</button>
-              <button onClick={() => this.sortBy(2)}>Descending</button>
+              <button className="btn tag" onClick={() => this.sortBy(1)}>
+                Ascending
+              </button>
+              <button className="btn tag" onClick={() => this.sortBy(2)}>
+                Descending
+              </button>
               {animalsSorted ? (
-                <button onClick={() => this.sortBy(0)}>Cancel</button>
+                <button className="btn tag" onClick={() => this.sortBy(0)}>
+                  Cancel
+                </button>
               ) : (
                 <></>
               )}
@@ -209,8 +219,8 @@ class AnimalFarm extends React.Component {
   choice4 = () => {
     const { animalList } = this.state;
     const totalAge = animalList.animals
-      .filter(a => a.type === "dog")
-      .map(e => e.age)
+      .filter((a) => a.type === "dog")
+      .map((e) => e.age)
       .reduce((a, b) => a + b, 0);
     const dogAgeTotal = parseFloat(totalAge * 7).toFixed(1);
     return (
@@ -225,7 +235,7 @@ class AnimalFarm extends React.Component {
         <h4>All dogs</h4>
         <div className="animal-cards">
           {animalList.animals
-            .filter(e => e.type === "dog")
+            .filter((e) => e.type === "dog")
             .map((ele, index) => {
               return (
                 <AnimalCard

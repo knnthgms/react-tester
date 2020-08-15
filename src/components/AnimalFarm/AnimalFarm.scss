@@ -1,15 +1,4 @@
-.animal-cards {
-  display: flex;
-  flex-flow: wrap;
-  padding: 10px;
-  justify-content: center;
-}
-.animal-avg-cards {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 10px;
-}
+@import "../../styles/mixins.scss";
 .button-container {
   button {
     margin: 5px 10px 0 0;
@@ -22,7 +11,24 @@
   }
 }
 .app-content {
+  @include screen("desktop") {
+    margin: 0 10em;
+  }
+  @include screen("tablet") {
+    margin: 0 5em;
+  }
   padding: 2em;
+  .animal-cards {
+    display: flex;
+    flex-flow: wrap;
+    padding: 10px 0;
+  }
+  .animal-avg-cards {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+  }
   .user-choice-select {
     padding: 10px 0;
   }
@@ -44,6 +50,7 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+
     .cards-sorting {
       display: inherit;
       align-items: baseline;
