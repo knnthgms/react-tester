@@ -1,26 +1,30 @@
 import React from "react";
 import "./AnimalCard.scss";
 
-const AnimalCard = props => {
+const AnimalCard = (props) => {
   return (
-    <div className={"animal-card " + props.type + "-card"}>
-      <div className="card-row">
-        <span className="key">name</span>
-        <span className="value">{props.name}</span>
+    <>
+      <div className={"animal-card " + props.type + "-card"}>
+        <div className="animal-card__header">
+          <img
+            src="http://placehold.it/350x200"
+            className="animal-card__image"
+            alt="Card Image"
+          />
+        </div>
+
+        <div className="animal-card__body">
+          <h2 className="animal-card__title">{props.name}</h2>
+          <p className="animal-card__subtitle">{props.type}</p>
+          <p className="animal-card__intro">
+            <span className={props.sex ? "animal-m" : "animal-f"}>
+              {props.sex ? "M" : "F"}{" "}
+            </span>
+            /{props.age}Y
+          </p>
+        </div>
       </div>
-      <div className="card-row">
-        <span className="key">type</span>
-        <span className="value">{props.type}</span>
-      </div>
-      <div className="card-row">
-        <span className="key">age</span>
-        <span className="value">{props.age}</span>
-      </div>
-      <div className="card-row">
-        <span className="key">sex</span>
-        <span className="value">{props.sex ? "M" : "F"}</span>
-      </div>
-    </div>
+    </>
   );
 };
 
