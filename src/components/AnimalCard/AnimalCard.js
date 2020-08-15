@@ -9,7 +9,7 @@ const AnimalCard = (props) => {
           <img
             src="http://placehold.it/350x200"
             className="animal-card__image"
-            alt="Card Image"
+            alt="animal"
           />
         </div>
 
@@ -17,10 +17,10 @@ const AnimalCard = (props) => {
           <h2 className="animal-card__title">{props.name}</h2>
           <p className="animal-card__subtitle">{props.type}</p>
           <p className="animal-card__intro">
+            {props.age}Y{" "}
             <span className={props.sex ? "animal-m" : "animal-f"}>
-              {props.sex ? "M" : "F"}{" "}
+              {props.sex ? "M" : "F"}
             </span>
-            /{props.age}Y
           </p>
         </div>
       </div>

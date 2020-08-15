@@ -2,8 +2,7 @@ import { render } from "react-dom";
 import React from "react";
 import AnimalFarm from "./components/AnimalFarm";
 import Api from "./Api";
-import APICONSTANTS from "./Api/Constants.js";
-import "./App.scss";
+import "./index.scss";
 
 class App extends React.Component {
   state = {

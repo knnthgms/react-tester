@@ -276,7 +276,7 @@ class AnimalFarm extends React.Component {
         <span className="timestamps">
           {dataError
             ? `using offline data`
-            : "data fetched at" + new Date().toGMTString()}
+            : "data fetched on " + new Date().toGMTString()}
         </span>
 
         <div className="user-choice-select">

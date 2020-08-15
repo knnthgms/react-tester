@@ -11,6 +11,8 @@
   }
 }
 .app-content {
+  padding: 2em;
+  background-color: white;
   @include screen("desktop") {
     margin: 0 10em;
   }
@@ -23,7 +25,6 @@
     position: absolute;
     right: 10%;
   }
-  padding: 2em;
   .animal-cards {
     display: flex;
     flex-flow: wrap;
@@ -31,6 +32,7 @@
   }
   .animal-avg-cards {
     display: flex;
+    flex-wrap: wrap;
     padding: 10px;
   }
   .user-choice-select {
