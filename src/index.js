@@ -26,13 +26,14 @@ class App extends React.Component {
   };
   render() {
     const { data, fetchingData, fetchingError } = this.state;
+    const renderCondition = data || !fetchingData || fetchingError;
     return (
       <div className="main-app">
         <header className="app-header">
           <span className="header-text">Leaf Grow coding assessment</span>
         </header>
         <main className="app-body">
-          {(data || !fetchingData || fetchingError) && (
+          {renderCondition && (
             <AnimalFarm
               data={data}
               fetchingData={fetchingData}
